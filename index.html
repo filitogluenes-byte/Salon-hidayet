@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Salih Hidayet | Randevu Sistemi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #f1c40f; /* Altın sarısı detaylar */
+            --bg-dark: #0f0f0f;
+            --glass-bg: rgba(255, 255, 255, 0.07);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top right, #1a1a1a, #000);
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Mobil Uyumlu Konteyner */
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 30px 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 { 
+            text-align: center; 
+            margin-bottom: 25px; 
+            font-weight: 600; 
+            color: var(--primary-color);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 1.4rem;
+        }
+
+        .input-group { margin-bottom: 18px; }
+
+        label { 
+            display: block; 
+            margin-bottom: 8px; 
+            font-size: 13px; 
+            color: #aaa; 
+            padding-left: 5px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 16px; /* Mobilde zoom yapmaması için ideal boyut */
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--primary-color);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(241, 196, 15, 0.2);
+        }
+
+        /* WhatsApp Butonu */
+        .btn-send {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary-color);
+            border: none;
+            border-radius: 12px;
+            color: #000;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.4s;
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-send:active {
+            transform: scale(0.95);
+            background: #d4ac0d;
+        }
+
+        .footer-text {
+            text-align: center;
+            font-size: 11px;
+            color: #555;
+            margin-top: 20px;
+        }
+
+        /* Mobil için ek düzenlemeler */
+        @media (max-width: 480px) {
+            .container { padding: 25px 15px; }
+            h2 { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>SALİH HİDAYET</h2>
+    
+    <div class="input-group">
+        <label>Adınız Soyadınız</label>
+        <input type="text" id="cust_name" placeholder="Örn: Ahmet Yılmaz">
+    </div>
+
+    <div class="input-group">
+        <label>Ne İşlem Yaptırmak İstiyorsunuz?</label>
+        <textarea id="cust_service" rows="3" placeholder="Yaptırmak istediğiniz işlemi buraya yazın..."></textarea>
+    </div>
+
+    <div class="input-group" style="display: flex; gap: 10px;">
+        <div style="flex: 1;">
+            <label>Tarih</label>
+            <input type="date" id="cust_date">
+        </div>
+        <div style="flex: 1;">
+            <label>Saat</label>
+            <input type="time" id="cust_time">
+        </div>
+    </div>
+
+    <button class="btn-send" onclick="submitToWhatsApp()">
+        <span>Randevu Talebi Gönder</span>
+    </button>
+
+    <div class="footer-text">
+        © 2024 Salih Hidayet Randevu Sistemi
+    </div>
+</div>
+
+<script>
+    function submitToWhatsApp() {
+        const name = document.getElementById('cust_name').value;
+        const service = document.getElementById('cust_service').value;
+        const date = document.getElementById('cust_date').value;
+        const time = document.getElementById('cust_time').value;
+
+        if(!name || !service || !date || !time) {
+            alert("Lütfen tüm alanları doldurunuz.");
+            return;
+        }
+
+        // WhatsApp Numaranız
+        const phoneNumber = "905321337332"; 
+        
+        // WhatsApp Mesaj İçeriği
+        const message = 
+            `*⭐ SALİH HİDAYET RANDEVU TALEBİ ⭐*%0A%0A` +
+            `👤 *Müşteri:* ${name}%0A` +
+            `🛠 *İşlem:* ${service}%0A` +
+            `📅 *Tarih:* ${date}%0A` +
+            `⏰ *Saat:* ${time}%0A%0A` +
+            `_Not: Randevuyu onaylamak için lütfen bu mesajı cevaplayın._`;
+
+        // WhatsApp Yönlendirme
+        const finalLink = `https://wa.me/${phoneNumber}?text=${message}`;
+        window.open(finalLink, '_blank');
+    }
+</script>
+
+</body>
+</html>
