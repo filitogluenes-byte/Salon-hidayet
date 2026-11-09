@@ -1,190 +1,600 @@
+```html
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Salih Hidayet | Randevu Sistemi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #f1c40f; /* Altın sarısı detaylar */
-            --bg-dark: #0f0f0f;
-            --glass-bg: rgba(255, 255, 255, 0.07);
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salon Hidayet Hair & Makeup Studio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            DEFAULT: '#D4AF37',
+                            light: '#F3E5AB',
+                            dark: '#AA8C2C',
+                            metallic: '#BF9B30'
+                        },
+                        darkBg: '#0A0A0A',
+                        cardBg: '#141414',
+                        inputBg: '#1F1F1F'
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
         }
-
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
         body {
-            font-family: 'Poppins', sans-serif;
-            background: radial-gradient(circle at top right, #1a1a1a, #000);
-            color: white;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background-color: #0A0A0A;
+            color: #E5E7EB;
             overflow-x: hidden;
         }
-
-        /* Mobil Uyumlu Konteyner */
-        .container {
-            width: 90%;
-            max-width: 400px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 25px;
-            padding: 30px 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-            animation: fadeIn 1s ease-out;
+        .font-serif {
+            font-family: 'Playfair Display', serif;
         }
-
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #AA8C2C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-gradient-bg {
+            background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #AA8C2C 100%);
+        }
+        .gold-border {
+            border-color: #D4AF37;
+        }
+        .glass-card {
+            background: rgba(20, 20, 20, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .glass-card-hover:hover {
+            border-color: rgba(212, 175, 55, 0.6);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.15);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0A0A0A;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 4px;
+        }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        h2 { 
-            text-align: center; 
-            margin-bottom: 25px; 
-            font-weight: 600; 
-            color: var(--primary-color);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            font-size: 1.4rem;
+        .animate-fade-in {
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
-
-        .input-group { margin-bottom: 18px; }
-
-        label { 
-            display: block; 
-            margin-bottom: 8px; 
-            font-size: 13px; 
-            color: #aaa; 
-            padding-left: 5px;
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
+            50% { box-shadow: 0 0 35px rgba(212, 175, 55, 0.6); }
         }
-
-        input, textarea {
-            width: 100%;
-            padding: 14px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: white;
-            font-size: 16px; /* Mobilde zoom yapmaması için ideal boyut */
-            transition: all 0.3s ease;
-            box-sizing: border-box;
-            outline: none;
-        }
-
-        input:focus, textarea:focus {
-            border-color: var(--primary-color);
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 15px rgba(241, 196, 15, 0.2);
-        }
-
-        /* WhatsApp Butonu */
-        .btn-send {
-            width: 100%;
-            padding: 16px;
-            background: var(--primary-color);
-            border: none;
-            border-radius: 12px;
-            color: #000;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.4s;
-            margin-top: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-send:active {
-            transform: scale(0.95);
-            background: #d4ac0d;
-        }
-
-        .footer-text {
-            text-align: center;
-            font-size: 11px;
-            color: #555;
-            margin-top: 20px;
-        }
-
-        /* Mobil için ek düzenlemeler */
-        @media (max-width: 480px) {
-            .container { padding: 25px 15px; }
-            h2 { font-size: 1.2rem; }
+        .glow-effect {
+            animation: pulseGlow 3s infinite;
         }
     </style>
 </head>
-<body>
+<body class="bg-darkBg min-h-screen text-slate-100 flex flex-col justify-between selection:bg-gold selection:text-black">
 
-<div class="container">
-    <h2>SALON HİDAYET</h2>
-    
-    <div class="input-group">
-        <label>Adınız Soyadınız</label>
-        <input type="text" id="cust_name" placeholder="Örn: AYLİN Yılmaz">
-    </div>
+    <!-- INTRO SCREEN -->
+    <div id="introScreen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-darkBg px-4 transition-opacity duration-700">
+        <!-- Background decorative ambient glow -->
+        <div class="absolute w-72 h-72 md:w-96 md:h-96 rounded-full bg-gold/10 blur-[120px] pointer-events-none"></div>
+        
+        <div class="glass-card p-8 md:p-12 rounded-3xl max-w-xl w-full text-center relative overflow-hidden glow-effect animate-fade-in">
+            <!-- Top crown/logo icon -->
+            <div class="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-full bg-gold/10 text-gold mb-6 border border-gold/30">
+                <i class="fa-solid fa-crown text-2xl md:text-3xl"></i>
+            </div>
+            
+            <span class="text-xs md:text-sm uppercase tracking-[0.3em] text-gold font-semibold block mb-2">VIP Luxury Hair & Makeup</span>
+            <h1 class="font-serif text-3xl md:text-5xl font-bold gold-gradient-text mb-4 leading-tight">
+                Salon Hidayet
+            </h1>
+            <p class="text-slate-400 text-sm md:text-base mb-8 max-w-md mx-auto">
+                Kişiselleştirilmiş saç tasarım ve profesyonel makyaj deneyimi ile kendinizi ayrıcalıklı hissedin.
+            </p>
 
-    <div class="input-group">
-        <label>Ne İşlem Yaptırmak İstiyorsunuz?</label>
-        <textarea id="cust_service" rows="3" placeholder="Yaptırmak istediğiniz işlemi buraya yazın..."></textarea>
-    </div>
-
-    <div class="input-group" style="display: flex; gap: 10px;">
-        <div style="flex: 1;">
-            <label>Tarih</label>
-            <input type="date" id="cust_date">
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="enterApp()" class="w-full sm:w-auto px-8 py-4 rounded-xl gold-gradient-bg text-black font-semibold tracking-wide hover:opacity-90 transition-all duration-300 shadow-lg shadow-gold/25 flex items-center justify-center gap-3 group">
+                    <span>Randevu Oluştur</span>
+                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                </button>
+                <button onclick="scrollToServices()" class="w-full sm:w-auto px-6 py-4 rounded-xl glass-card text-gold font-semibold tracking-wide hover:bg-gold/10 transition-all duration-300 border border-gold/40 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-spa"></i>
+                    <span>Hizmetlerimiz</span>
+                </button>
+            </div>
         </div>
-        <div style="flex: 1;">
-            <label>Saat</label>
-            <input type="time" id="cust_time">
+
+        <div class="absolute bottom-6 text-center text-xs text-slate-500 tracking-wider">
+            © 2026 Salon Hidayet Studio. Tüm Hakları Saklıdır.
         </div>
     </div>
 
-    <button class="btn-send" onclick="submitToWhatsApp()">
-        <span>Randevu Talebi Gönder</span>
-    </button>
+    <!-- MAIN APP CONTAINER -->
+    <div id="mainApp" class="hidden flex-1 flex flex-col opacity-0 transition-opacity duration-700">
+        
+        <!-- HEADER / NAVIGATION -->
+        <header class="sticky top-0 z-40 glass-card border-b border-gold/20 backdrop-blur-md">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+                <div class="flex items-center gap-3 cursor-pointer" onclick="resetToHome()">
+                    <div class="w-10 h-10 rounded-full bg-gold/10 border border-gold/40 flex items-center justify-center text-gold">
+                        <i class="fa-solid fa-crown text-sm"></i>
+                    </div>
+                    <div>
+                        <span class="font-serif text-lg md:text-xl font-bold gold-gradient-text block leading-none">Salon Hidayet</span>
+                        <span class="text-[10px] uppercase tracking-widest text-slate-400">Hair & Makeup Studio</span>
+                    </div>
+                </div>
 
-    <div class="footer-text">
-        © 2026 SALON HİDAYET Randevu Sistemi
+                <div class="flex items-center gap-3">
+                    <button onclick="openBookingModal()" class="px-4 py-2.5 rounded-lg gold-gradient-bg text-black font-medium text-sm flex items-center gap-2 hover:opacity-95 shadow-md shadow-gold/20 transition-all">
+                        <i class="fa-regular fa-calendar-check"></i>
+                        <span class="hidden sm:inline">Hemen Randevu Al</span>
+                        <span class="sm:hidden">Randevu</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- HERO & SERVICES SHOWCASE -->
+        <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+            
+            <!-- Banner Section -->
+            <div class="relative rounded-3xl overflow-hidden glass-card p-6 md:p-12 mb-12 border border-gold/30">
+                <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-gold/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="relative z-10 max-w-2xl">
+                    <span class="px-3 py-1 rounded-full bg-gold/10 text-gold text-xs font-semibold uppercase tracking-wider inline-block mb-4 border border-gold/30">
+                        VIP Deneyim & Uzman Kadro
+                    </span>
+                    <h2 class="font-serif text-3xl md:text-5xl font-bold text-white mb-4 leading-tight">
+                        Tarzınızı <span class="gold-gradient-text">Zirveye</span> Taşıyın
+                    </h2>
+                    <p class="text-slate-300 text-sm md:text-base mb-6 leading-relaxed">
+                        Saç kesimi, profesyonel renklendirme, gelin saçı, özel makyaj ve cilt bakım uygulamalarımızla kendinizi yenileyin. Randevunuzu saniyeler içinde oluşturun, WhatsApp üzerinden anında onay alın.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <button onclick="openBookingModal()" class="px-6 py-3.5 rounded-xl gold-gradient-bg text-black font-semibold text-sm hover:opacity-90 transition shadow-lg shadow-gold/20 flex items-center gap-2">
+                            <i class="fa-solid fa-calendar-plus"></i>
+                            Randevu Formunu Aç
+                        </button>
+                        <a href="https://wa.me/905321337332?text=Merhaba,%20Salon%20Hidayet%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" class="px-6 py-3.5 rounded-xl glass-card text-gold font-semibold text-sm hover:bg-gold/10 transition border border-gold/40 flex items-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-lg"></i>
+                            Canlı Destek / WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Section -->
+            <div id="servicesSection" class="mb-14">
+                <div class="text-center max-w-xl mx-auto mb-10">
+                    <h3 class="font-serif text-2xl md:text-3xl font-bold text-white mb-3">Popüler <span class="gold-gradient-text">Hizmetlerimiz</span></h3>
+                    <p class="text-slate-400 text-sm">En çok tercih edilen saç ve güzellik uygulamalarımızı inceleyin, dilediğiniz işlemi randevu formunda seçin.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Service Card 1 -->
+                    <div class="glass-card glass-card-hover p-6 rounded-2xl transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-gold/10 text-gold flex items-center justify-center mb-4 text-xl border border-gold/30">
+                                <i class="fa-solid fa-scissors"></i>
+                            </div>
+                            <h4 class="font-serif text-xl font-bold text-white mb-2">Saç Kesimi & Styling</h4>
+                            <p class="text-slate-400 text-sm mb-4">Yüz hatlarınıza en uygun modern kesimler ve profesyonel fön/styling uygulamaları.</p>
+                        </div>
+                        <button onclick="selectServiceAndBook('Saç Kesimi & Styling')" class="w-full py-2.5 rounded-lg bg-gold/10 text-gold hover:bg-gold hover:text-black font-medium text-sm transition-all border border-gold/30 flex items-center justify-center gap-2">
+                            <span>Bu İşlemi Seç</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Service Card 2 -->
+                    <div class="glass-card glass-card-hover p-6 rounded-2xl transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-gold/10 text-gold flex items-center justify-center mb-4 text-xl border border-gold/30">
+                                <i class="fa-solid fa-palette"></i>
+                            </div>
+                            <h4 class="font-serif text-xl font-bold text-white mb-2">Boya & Renklendirme</h4>
+                            <p class="text-slate-400 text-sm mb-4">Ombre, sombre, balyaj, dip boyası ve özel saç renk açma işlemleri.</p>
+                        </div>
+                        <button onclick="selectServiceAndBook('Boya & Renklendirme')" class="w-full py-2.5 rounded-lg bg-gold/10 text-gold hover:bg-gold hover:text-black font-medium text-sm transition-all border border-gold/30 flex items-center justify-center gap-2">
+                            <span>Bu İşlemi Seç</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Service Card 3 -->
+                    <div class="glass-card glass-card-hover p-6 rounded-2xl transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-gold/10 text-gold flex items-center justify-center mb-4 text-xl border border-gold/30">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            </div>
+                            <h4 class="font-serif text-xl font-bold text-white mb-2">Gelin Başı & Özel Tasarım</h4>
+                            <p class="text-slate-400 text-sm mb-4">En mutlu gününüzde kusursuz görünmeniz için özel gelin saçı ve prova hizmetleri.</p>
+                        </div>
+                        <button onclick="selectServiceAndBook('Gelin Başı & Özel Tasarım')" class="w-full py-2.5 rounded-lg bg-gold/10 text-gold hover:bg-gold hover:text-black font-medium text-sm transition-all border border-gold/30 flex items-center justify-center gap-2">
+                            <span>Bu İşlemi Seç</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Service Card 4 -->
+                    <div class="glass-card glass-card-hover p-6 rounded-2xl transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-gold/10 text-gold flex items-center justify-center mb-4 text-xl border border-gold/30">
+                                <i class="fa-solid fa-face-smile"></i>
+                            </div>
+                            <h4 class="font-serif text-xl font-bold text-white mb-2">Profesyonel Makyaj</h4>
+                            <p class="text-slate-400 text-sm mb-4">Günlük makyaj, gece makyajı, nişan ve özel davet makyajı uygulamaları.</p>
+                        </div>
+                        <button onclick="selectServiceAndBook('Profesyonel Makyaj')" class="w-full py-2.5 rounded-lg bg-gold/10 text-gold hover:bg-gold hover:text-black font-medium text-sm transition-all border border-gold/30 flex items-center justify-center gap-2">
+                            <span>Bu İşlemi Seç</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Service Card 5 -->
+                    <div class="glass-card glass-card-hover p-6 rounded-2xl transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-gold/10 text-gold flex items-center justify-center mb-4 text-xl border border-gold/30">
+                                <i class="fa-solid fa-hand-sparkles"></i>
+                            </div>
+                            <h4 class="font-serif text-xl font-bold text-white mb-2">Cilt Bakımı & Bakım</h4>
+                            <p class="text-slate-400 text-sm mb-4">Saç botoksu, keratin bakım, derinlemesine cilt temizliği ve bakım kürleri.</p>
+                        </div>
+                        <button onclick="selectServiceAndBook('Cilt Bakımı & Bakım')" class="w-full py-2.5 rounded-lg bg-gold/10 text-gold hover:bg-gold hover:text-black font-medium text-sm transition-all border border-gold/30 flex items-center justify-center gap-2">
+                            <span>Bu İşlemi Seç</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Service Card 6 -->
+                    <div class="glass-card glass-card-hover p-6 rounded-2xl transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-gold/10 text-gold flex items-center justify-center mb-4 text-xl border border-gold/30">
+                                <i class="fa-solid fa-gem"></i>
+                            </div>
+                            <h4 class="font-serif text-xl font-bold text-white mb-2">Diğer / Özel İşlem</h4>
+                            <p class="text-slate-400 text-sm mb-4">Listede olmayan farklı bir işlem yaptırmak istiyorsanız özel olarak belirtebilirsiniz.</p>
+                        </div>
+                        <button onclick="selectServiceAndBook('Diğer / Özel İşlem')" class="w-full py-2.5 rounded-lg bg-gold/10 text-gold hover:bg-gold hover:text-black font-medium text-sm transition-all border border-gold/30 flex items-center justify-center gap-2">
+                            <span>Bu İşlemi Seç</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Bar / Location & Contact -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div class="glass-card p-6 rounded-2xl flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-gold/10 text-gold flex items-center justify-center text-xl shrink-0 border border-gold/30">
+                        <i class="fa-solid fa-phone"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-400 uppercase tracking-wider block">WhatsApp / İletişim</span>
+                        <a href="https://wa.me/905321337332" target="_blank" class="text-white font-semibold hover:text-gold transition">0532 133 73 32</a>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-gold/10 text-gold flex items-center justify-center text-xl shrink-0 border border-gold/30">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-400 uppercase tracking-wider block">Çalışma Saatleri</span>
+                        <span class="text-white font-semibold">Pzt - Cts: 09:00 - 20:00</span>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-gold/10 text-gold flex items-center justify-center text-xl shrink-0 border border-gold/30">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-400 uppercase tracking-wider block">Stüdyo Konumu</span>
+                        <span class="text-white font-semibold">Merkez / VIP Şube</span>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="glass-card border-t border-gold/20 py-8 text-center text-slate-400 text-sm">
+            <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-2">
+                    <span class="font-serif font-bold gold-gradient-text text-lg">Salon Hidayet</span>
+                    <span>Hair & Makeup Studio</span>
+                </div>
+                <p>© 2026 Tüm hakları saklıdır. Randevular WhatsApp üzerinden onaylanmaktadır.</p>
+                <div class="flex gap-4 text-gold">
+                    <a href="https://wa.me/905321337332" target="_blank" class="hover:text-white transition"><i class="fa-brands fa-whatsapp text-lg"></i></a>
+                    <a href="#" class="hover:text-white transition"><i class="fa-brands fa-instagram text-lg"></i></a>
+                </div>
+            </div>
+        </footer>
+
     </div>
-</div>
 
-<script>
-    function submitToWhatsApp() {
-        const name = document.getElementById('cust_name').value;
-        const service = document.getElementById('cust_service').value;
-        const date = document.getElementById('cust_date').value;
-        const time = document.getElementById('cust_time').value;
+    <!-- BOOKING MODAL -->
+    <div id="bookingModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 hidden opacity-0 transition-opacity duration-300">
+        <div class="glass-card rounded-3xl max-w-lg w-full p-6 md:p-8 relative border border-gold/40 shadow-2xl max-h-[90vh] overflow-y-auto">
+            
+            <!-- Close Button -->
+            <button onclick="closeBookingModal()" class="absolute top-5 right-5 w-10 h-10 rounded-full bg-inputBg text-slate-400 hover:text-white hover:bg-gold/20 transition flex items-center justify-center border border-gold/20">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
 
-        if(!name || !service || !date || !time) {
-            alert("Lütfen tüm alanları doldurunuz.");
-            return;
+            <div class="text-center mb-6">
+                <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gold/10 text-gold mb-2 border border-gold/30">
+                    <i class="fa-solid fa-calendar-days text-lg"></i>
+                </div>
+                <h3 class="font-serif text-2xl font-bold text-white">Randevu Oluştur</h3>
+                <p class="text-slate-400 text-xs md:text-sm">Bilgileri doldurun, WhatsApp ile doğrudan randevunuzu iletelim.</p>
+            </div>
+
+            <form id="appointmentForm" onsubmit="submitAppointment(event)" class="space-y-4">
+                <!-- İsim Soyisim -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
+                        İsim Soyisim <span class="text-gold">*</span>
+                    </label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500">
+                            <i class="fa-regular fa-user"></i>
+                        </span>
+                        <input type="text" id="fullName" required placeholder="Adınız Soyadınız" 
+                            class="w-full bg-inputBg border border-gold/30 rounded-xl py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-gold transition">
+                    </div>
+                </div>
+
+                <!-- Yaptırmak İstenen İşlem -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
+                        Yaptırmak İstediğiniz İşlem <span class="text-gold">*</span>
+                    </label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500">
+                            <i class="fa-solid fa-scissors"></i>
+                        </span>
+                        <select id="serviceType" required
+                            class="w-full bg-inputBg border border-gold/30 rounded-xl py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-gold transition appearance-none cursor-pointer">
+                            <option value="" disabled selected>İşlem Seçiniz</option>
+                            <option value="Saç Kesimi & Styling">Saç Kesimi & Styling</option>
+                            <option value="Boya & Renklendirme">Boya & Renklendirme</option>
+                            <option value="Gelin Başı & Özel Tasarım">Gelin Başı & Özel Tasarım</option>
+                            <option value="Profesyonel Makyaj">Profesyonel Makyaj</option>
+                            <option value="Cilt Bakımı & Bakım">Cilt Bakımı & Bakım</option>
+                            <option value="Diğer / Özel İşlem">Diğer / Özel İşlem</option>
+                        </select>
+                        <span class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 pointer-events-none">
+                            <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Personel Seçimi -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
+                        İşlem Yapılacak Kişi / Personel <span class="text-gold">*</span>
+                    </label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </span>
+                        <select id="staffMember" required
+                            class="w-full bg-inputBg border border-gold/30 rounded-xl py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-gold transition appearance-none cursor-pointer">
+                            <option value="" disabled selected>Uzman Seçiniz</option>
+                            <option value="Hidayet (Master Stylist)">Hidayet (Master Stylist)</option>
+                            <option value="Uzman Ekip (İlk Müsait Personel)">Uzman Ekip (İlk Müsait Personel)</option>
+                            <option value="Makyaj Uzmanı">Makyaj Uzmanı</option>
+                        </select>
+                        <span class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 pointer-events-none">
+                            <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Tarih ve Saat -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
+                            Tarih <span class="text-gold">*</span>
+                        </label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500">
+                                <i class="fa-regular fa-calendar"></i>
+                            </span>
+                            <input type="date" id="appDate" required
+                                class="w-full bg-inputBg border border-gold/30 rounded-xl py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-gold transition">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
+                            Saat <span class="text-gold">*</span>
+                        </label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500">
+                                <i class="fa-regular fa-clock"></i>
+                            </span>
+                            <select id="appTime" required
+                                class="w-full bg-inputBg border border-gold/30 rounded-xl py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-gold transition appearance-none cursor-pointer">
+                                <option value="" disabled selected>Saat Seçin</option>
+                                <option value="09:00">09:00</option>
+                                <option value="10:00">10:00</option>
+                                <option value="11:00">11:00</option>
+                                <option value="12:00">12:00</option>
+                                <option value="13:00">13:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="15:00">15:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="17:00">17:00</option>
+                                <option value="18:00">18:00</option>
+                                <option value="19:00">19:00</option>
+                            </select>
+                            <span class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 pointer-events-none">
+                                <i class="fa-solid fa-chevron-down text-xs"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Açıklama / Ek Notlar (İsteğe Bağlı) -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
+                        Açıklama / Ek Notlar <span class="text-slate-500 font-normal">(İsteğe Bağlı)</span>
+                    </label>
+                    <div class="relative">
+                        <textarea id="appNote" rows="2" placeholder="Örn: Saçım uzun ve kalın telli..."
+                            class="w-full bg-inputBg border border-gold/30 rounded-xl py-3 px-4 text-white text-sm focus:outline-none focus:border-gold transition resize-none"></textarea>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="w-full py-4 rounded-xl gold-gradient-bg text-black font-semibold text-sm hover:opacity-95 transition shadow-lg shadow-gold/25 flex items-center justify-center gap-2 mt-2">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    <span>WhatsApp ile Randevu Gönder</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- SCRIPT LOGIC -->
+    <script>
+        // Set minimum date to today
+        document.addEventListener('DOMContentLoaded', () => {
+            const today = new Date().toISOString().split('T')[0];
+            const dateInput = document.getElementById('appDate');
+            if(dateInput) {
+                dateInput.min = today;
+                dateInput.value = today;
+            }
+        });
+
+        function enterApp() {
+            const intro = document.getElementById('introScreen');
+            const main = document.getElementById('mainApp');
+            
+            intro.style.opacity = '0';
+            setTimeout(() => {
+                intro.classList.add('hidden');
+                main.classList.remove('hidden');
+                setTimeout(() => {
+                    main.style.opacity = '1';
+                }, 50);
+            }, 700);
         }
 
-        // WhatsApp Numaranız
-        const phoneNumber = "905321337332"; 
-        
-        // WhatsApp Mesaj İçeriği
-        const message = 
-            `*🌺 SALON HİDAYET RANDEVU TALEBİ 🌺*%0A%0A` +
-            `👤 *Müşteri:* ${name}%0A` +
-            `🌷 *İşlem:* ${service}%0A` +
-            `📅 *Tarih:* ${date}%0A` +
-            `⏰ *Saat:* ${time}%0A%0A` +
-            `_Not: Randevuyu onaylamak için lütfen bu mesajı cevaplayın._`;
+        function scrollToServices() {
+            enterApp();
+            setTimeout(() => {
+                const section = document.getElementById('servicesSection');
+                if(section) {
+                    section.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 800);
+        }
 
-        // WhatsApp Yönlendirme
-        const finalLink = `https://wa.me/${phoneNumber}?text=${message}`;
-        window.open(finalLink, '_blank');
-    }
-</script>
+        function resetToHome() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
+        function openBookingModal() {
+            // Ensure main app is visible if coming directly
+            const intro = document.getElementById('introScreen');
+            if(!intro.classList.contains('hidden')) {
+                enterApp();
+                setTimeout(() => {
+                    showModalElement();
+                }, 750);
+            } else {
+                showModalElement();
+            }
+        }
+
+        function showModalElement() {
+            const modal = document.getElementById('bookingModal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.style.opacity = '1';
+            }, 50);
+        }
+
+        function closeBookingModal() {
+            const modal = document.getElementById('bookingModal');
+            modal.style.opacity = '0';
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function selectServiceAndBook(serviceName) {
+            openBookingModal();
+            setTimeout(() => {
+                const selectElem = document.getElementById('serviceType');
+                if(selectElem) {
+                    selectElem.value = serviceName;
+                }
+            }, 100);
+        }
+
+        function submitAppointment(event) {
+            event.preventDefault();
+            
+            const fullName = document.getElementById('fullName').value.trim();
+            const serviceType = document.getElementById('serviceType').value;
+            const staffMember = document.getElementById('staffMember').value;
+            const appDate = document.getElementById('appDate').value;
+            const appTime = document.getElementById('appTime').value;
+            const appNote = document.getElementById('appNote').value.trim();
+
+            if(!fullName || !serviceType || !staffMember || !appDate || !appTime) {
+                return;
+            }
+
+            // Format WhatsApp Message
+            let message = `Merhaba, Salon Hidayet Hair & Makeup Studio için randevu talebim var:\n\n`;
+            message += `- İsim Soyisim: ${fullName}\n`;
+            message += `- İşlem: ${serviceType}\n`;
+            message += `- Personel: ${staffMember}\n`;
+            message += `- Tarih & Saat: ${appDate} - ${appTime}\n`;
+            if(appNote) {
+                message += `- Açıklama: ${appNote}\n`;
+            } else {
+                message += `- Açıklama: Belirtilmedi\n`;
+            }
+            message += `\nLütfen randevumu onaylar mısınız?`;
+
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/905321337332?text=${encodedMessage}`;
+
+            // Open WhatsApp
+            window.open(whatsappUrl, '_blank');
+            closeBookingModal();
+        }
+    </script>
 </body>
 </html>
+```
