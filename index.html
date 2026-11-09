@@ -299,11 +299,11 @@
 
                 <div class="glass-card p-6 rounded-2xl flex items-center gap-4">
                     <div class="w-12 h-12 rounded-xl bg-gold/10 text-gold flex items-center justify-center text-xl shrink-0 border border-gold/30">
-                        <i class="fa-solid fa-clock"></i>
+                        <i class="fa-brands fa-instagram"></i>
                     </div>
                     <div>
-                        <span class="text-xs text-slate-400 uppercase tracking-wider block">Çalışma Saatleri</span>
-                        <span class="text-white font-semibold">Pzt - Cts: 09:00 - 20:00</span>
+                        <span class="text-xs text-slate-400 uppercase tracking-wider block">Instagram</span>
+                        <a href="https://instagram.com/salonhidayet" target="_blank" class="text-white font-semibold hover:text-gold transition">@salonhidayet</a>
                     </div>
                 </div>
 
@@ -312,8 +312,8 @@
                         <i class="fa-solid fa-location-dot"></i>
                     </div>
                     <div>
-                        <span class="text-xs text-slate-400 uppercase tracking-wider block">Stüdyo Konumu</span>
-                        <span class="text-white font-semibold">Merkez / VIP Şube</span>
+                        <span class="text-xs text-slate-400 uppercase tracking-wider block">Stüdyo Adresi</span>
+                        <span class="text-white font-semibold text-xs leading-snug">Numune Evler Mah. Hasan İkiz Cad. No:20/B Dörtyol / Hatay</span>
                     </div>
                 </div>
             </div>
@@ -329,8 +329,8 @@
                 </div>
                 <p>© 2026 Tüm hakları saklıdır. Randevular WhatsApp üzerinden onaylanmaktadır.</p>
                 <div class="flex gap-4 text-gold">
-                    <a href="https://wa.me/905321337332" target="_blank" class="hover:text-white transition"><i class="fa-brands fa-whatsapp text-lg"></i></a>
-                    <a href="#" class="hover:text-white transition"><i class="fa-brands fa-instagram text-lg"></i></a>
+                    <a href="https://wa.me/905321337332" target="_blank" class="hover:text-white transition" title="WhatsApp"><i class="fa-brands fa-whatsapp text-lg"></i></a>
+                    <a href="https://instagram.com/salonhidayet" target="_blank" class="hover:text-white transition" title="Instagram"><i class="fa-brands fa-instagram text-lg"></i></a>
                 </div>
             </div>
         </footer>
@@ -416,7 +416,7 @@
                     </div>
                 </div>
 
-                <!-- Tarih ve Saat -->
+                <!-- Tarih ve Esnek Saat Seçimi -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
@@ -432,30 +432,14 @@
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
-                            Saat <span class="text-gold">*</span>
+                            Saat (Esnek / Serbest) <span class="text-gold">*</span>
                         </label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500">
                                 <i class="fa-regular fa-clock"></i>
                             </span>
-                            <select id="appTime" required
-                                class="w-full bg-inputBg border border-gold/30 rounded-xl py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-gold transition appearance-none cursor-pointer">
-                                <option value="" disabled selected>Saat Seçin</option>
-                                <option value="09:00">09:00</option>
-                                <option value="10:00">10:00</option>
-                                <option value="11:00">11:00</option>
-                                <option value="12:00">12:00</option>
-                                <option value="13:00">13:00</option>
-                                <option value="14:00">14:00</option>
-                                <option value="15:00">15:00</option>
-                                <option value="16:00">16:00</option>
-                                <option value="17:00">17:00</option>
-                                <option value="18:00">18:00</option>
-                                <option value="19:00">19:00</option>
-                            </select>
-                            <span class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 pointer-events-none">
-                                <i class="fa-solid fa-chevron-down text-xs"></i>
-                            </span>
+                            <input type="text" id="appTime" required placeholder="Örn: 14:30 veya öğleden sonra"
+                                class="w-full bg-inputBg border border-gold/30 rounded-xl py-3 pl-10 pr-4 text-white text-sm focus:outline-none focus:border-gold transition">
                         </div>
                     </div>
                 </div>
@@ -521,7 +505,6 @@
         }
 
         function openBookingModal() {
-            // Ensure main app is visible if coming directly
             const intro = document.getElementById('introScreen');
             if(!intro.classList.contains('hidden')) {
                 enterApp();
@@ -566,7 +549,7 @@
             const serviceType = document.getElementById('serviceType').value;
             const staffMember = document.getElementById('staffMember').value;
             const appDate = document.getElementById('appDate').value;
-            const appTime = document.getElementById('appTime').value;
+            const appTime = document.getElementById('appTime').value.trim();
             const appNote = document.getElementById('appNote').value.trim();
 
             if(!fullName || !serviceType || !staffMember || !appDate || !appTime) {
@@ -596,4 +579,3 @@
     </script>
 </body>
 </html>
-```
